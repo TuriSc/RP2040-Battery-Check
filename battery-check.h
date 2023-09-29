@@ -14,8 +14,15 @@
 #define LOW_BATT_THRESHOLD_DEFAULT  3250    // 3.25V
 #define PIN_BATT_LVL                29      // Cannot be changed
 
+typedef void (*Callback)(uint16_t mv);
+
+typedef struct callbacks_t {
+    Callback repeat;
+    Callback low;
+} Callbacks;
+
 static repeating_timer_t battery_check_timer;
-void battery_check_init(int delay_ms);
+void battery_check_init(int delay_ms, void* repeat_callback, void* low_callback);
 static bool battery_check_task();
 void battery_check_callback(uint16_t battery_mv);
 void battery_low_callback(uint16_t battery_mv);

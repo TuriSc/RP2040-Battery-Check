@@ -10,24 +10,26 @@
 #include "hardware/adc.h"
 
 uint16_t low_batt_threshold = LOW_BATT_THRESHOLD_DEFAULT;
+Callbacks callbacks;
 
-void battery_check_init(int delay_ms){
+void battery_check_init(int delay_ms, void* repeat_callback, void* low_callback){
     adc_gpio_init(PIN_BATT_LVL);
-
+    callbacks.repeat = repeat_callback;
+    callbacks.low = low_callback;
     // Non-time-critical routine, run by timer
-    add_repeating_timer_ms(delay_ms, battery_check_task, 0, &battery_check_timer);
+    add_repeating_timer_ms(delay_ms, battery_check_task, &callbacks, &battery_check_timer);
 }
 
-static bool battery_check_task() {
+static bool battery_check_task(repeating_timer_t *rt, void *user_data) {
     adc_select_input(3); // VSYS sense input
 
     // Coefficients from https://github.com/elehobica/pico_battery_op/
     uint16_t battery_mv = adc_read() * 9875 / (1<<12) - 20;
-    battery_check_callback(battery_mv);
-    static bool _low_callback_fired;
-    if (!_low_callback_fired && battery_mv < low_batt_threshold){
-        battery_low_callback(battery_mv);
-        _low_callback_fired = true;
+    if(callbacks.repeat){
+        callbacks.repeat(battery_mv);
+    }
+    if(callbacks.low){
+        callbacks.low(battery_mv);
     }
 }
 

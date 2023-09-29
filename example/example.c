@@ -31,9 +31,13 @@ int main() {
     // Initialize the ADC before continuing
     adc_init();
 
-    // Initialize the periodic measurement of VSYS voltage.
-    // The parameter is the delay between polls in milliseconds.
-    battery_check_init(5000);
+    /*  Initialize the periodic measurement of VSYS voltage.
+        Arguments:
+            (uint16_t) ms - delay between polls in milliseconds
+            (void) repeating_callback(uint16_t battery_mv) - or NULL
+            (void) low_battery_callback(uint16_t battery_mv) - or NULL
+    */
+    battery_check_init(5000, battery_check_callback, battery_low_callback);
 
     while (true) {
         tight_loop_contents(); // Nothing to do here
