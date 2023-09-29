@@ -28,7 +28,7 @@ static bool battery_check_task(repeating_timer_t *rt, void *user_data) {
     if(callbacks.repeat){
         callbacks.repeat(battery_mv);
     }
-    if(callbacks.low){
+    if(callbacks.low && battery_mv < low_batt_threshold){
         callbacks.low(battery_mv);
     }
 }
