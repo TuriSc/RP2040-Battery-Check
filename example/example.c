@@ -3,7 +3,6 @@
  * Measures the voltage level on the VSYS pin of a Raspberry Pi Pico.
  * Useful as a low-battery indicator.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * v1.0.0 - 2023.03.26
 */
 
 #include <stdio.h>
@@ -12,14 +11,16 @@
 #include "hardware/adc.h"
 
 void battery_check_callback(uint16_t battery_mv){
+    // Called periodically according to the timer set
+    // on initialization
     printf("VSYS voltage: %dmv\n", battery_mv);
+}
 
-    if (battery_mv < LOW_BATT_THRESHOLD){
-        // Low battery detected!
-        gpio_put(PICO_DEFAULT_LED_PIN, 1);
-    } else {
-        gpio_put(PICO_DEFAULT_LED_PIN, 0);
-    }
+void battery_low_callback(uint16_t battery_mv){
+    // Called once
+    printf("Low battery detected: %dmv\n", battery_mv);
+    gpio_put(PICO_DEFAULT_LED_PIN, 1);
+    battery_check_stop(); // Stop the timer
 }
 
 int main() {
@@ -35,6 +36,6 @@ int main() {
     battery_check_init(5000);
 
     while (true) {
-        tight_loop_contents(); // Do nothing
+        tight_loop_contents(); // Nothing to do here
     }
 }
