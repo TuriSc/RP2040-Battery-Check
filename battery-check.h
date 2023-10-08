@@ -11,6 +11,10 @@
 
 #include <pico/stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define LOW_BATT_THRESHOLD_DEFAULT  3250    // 3.25V
 #define PIN_BATT_LVL                29      // Cannot be changed
 
@@ -28,5 +32,9 @@ void battery_check_callback(uint16_t battery_mv);
 void battery_low_callback(uint16_t battery_mv);
 void battery_set_threshold(uint16_t mv);
 void battery_check_stop();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
