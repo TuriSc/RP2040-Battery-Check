@@ -33,7 +33,7 @@ int main() {
 
     /*  Initialize the periodic measurement of VSYS voltage.
         Arguments:
-            (uint16_t) ms - delay between polls in milliseconds
+            (uint16_t) ms - delay between polls in milliseconds - or 0 to disable automatic checks
             (void) repeating_callback(uint16_t battery_mv) - or NULL
             (void) low_battery_callback(uint16_t battery_mv) - or NULL
     */
