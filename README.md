@@ -21,6 +21,10 @@ void battery_set_threshold(uint16_t mv)
 
 // Stop the measurement by canceling the repeating timer
 void battery_check_stop()
+
+// Direct measurement. To be called after running battery_check_init with a delay of 0
+// and the callbacks set to NULL.
+uint16_t battery_mv = battery_check();
 ```
 
 An example application is provided.
