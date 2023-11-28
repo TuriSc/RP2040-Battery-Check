@@ -39,6 +39,16 @@ int main() {
     */
     battery_check_init(5000, battery_check_callback, battery_low_callback);
 
+    /*  For manual control over measurements, call battery_check_init with a delay of 0
+        and the callbacks set to NULL. Then call battery_check at the appropriate time:
+
+        battery_check_init(0, NULL, NULL);
+        uint16_t battery_mv = battery_check();
+
+        Note: immediately after power-on the reading can be significantly lower.
+        Perform other initialization first and/or add a sleep_ms(10) if required to stabilize it.
+    */
+
     while (true) {
         tight_loop_contents(); // Nothing to do here
     }
