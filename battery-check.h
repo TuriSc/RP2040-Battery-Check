@@ -33,6 +33,8 @@ void battery_low_callback(uint16_t battery_mv);
 void battery_set_threshold(uint16_t mv);
 void battery_check_stop();
 
+uint16_t battery_check();
+
 #ifdef __cplusplus
 }
 #endif
