@@ -36,6 +36,6 @@ An example application is provided.
 
 
 ### Version history
-- 2023.09.29 - v1.2.0 - Added battery_check()
+- 2023.11.28 - v1.2.0 - Added battery_check function for one-shot checks
 - 2023.09.29 - v1.1.0 - Added more public functions. Breaking changes.
 - 2023.03.26 - v1.0.0 - First release

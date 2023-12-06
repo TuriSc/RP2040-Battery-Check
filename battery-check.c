@@ -3,7 +3,7 @@
  * Measures the voltage level on the VSYS pin of a Raspberry Pi Pico.
  * Useful as a low-battery indicator.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * v1.1.0 - 2023.09.29
+ * 2023.11.28 - v1.2.0
 */
 
 #include "battery-check.h"
