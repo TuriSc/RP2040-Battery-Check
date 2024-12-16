@@ -1,23 +1,29 @@
-/*
- * RP2040 Battery check
- * Measures the voltage level on the VSYS pin of a Raspberry Pi Pico.
- * Useful as a low-battery indicator.
- * By Turi Scandurra – https://turiscandurra.com/circuits
-*/
+/**
+ * @file example.c
+ * @brief Example application for RP2040 Battery Check library
+ * @author Turi Scandurra
+ * @date 2023.11.28
+ * @version 1.2.0
+ */
 
 #include <stdio.h>
 #include <pico/stdlib.h>
 #include "battery-check.h"
 #include "hardware/adc.h"
 
-void battery_check_callback(uint16_t battery_mv){
-    // Called periodically according to the timer set
-    // on initialization
+/**
+ * @brief Callback function for battery voltage updates
+ * @param battery_mv Battery voltage in millivolts
+ */
+void battery_check_callback(uint16_t battery_mv) {
     printf("VSYS voltage: %dmv\n", battery_mv);
 }
 
-void battery_low_callback(uint16_t battery_mv){
-    // Called once
+/**
+ * @brief Callback function for low battery voltage detection
+ * @param battery_mv Battery voltage in millivolts
+ */
+void battery_low_callback(uint16_t battery_mv) {
     printf("Low battery detected: %dmv\n", battery_mv);
     gpio_put(PICO_DEFAULT_LED_PIN, 1);
     battery_check_stop(); // Stop the timer
